@@ -1,16 +1,20 @@
 const express = require("express");
 const todoRoutes = require("./routes/todo.routes.js");
 const app = express();
+const mongodb = require("./mongo/mongodb.connect");
 
+mongodb.connect();
+
+app.use(express.json());
 app.use("/todos", todoRoutes);
+app.use("/getTodos", todoRoutes);
 
-app.get("/", (req, res) => {
-    console.log("hello")
-    res.json("hello world");
+app.use((error, req, res, next) => {
+    res.status(500).json({message: error.message});
 });
 
-app.listen (3000, () =>{
-    console.log("running on 3000");
+app.get("/", (req, res) => {
+    res.json("hello world");
 });
 
 module.exports = app;

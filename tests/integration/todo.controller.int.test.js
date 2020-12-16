@@ -1,25 +1,32 @@
 const request = require("supertest");
-const app = ("../../app");
+const app = require("../../app");
 const newTodo = require("../mock-data/new-todo");
 const endpointUrl = "/todos/";
 
 describe(endpointUrl, () => {
-    it("POST " + endpointUrl, async () => {
-         request(app)
-        // .get("localhost:3000")
-        // .expect(200);
-        try {
-            
-         const response = await request(app).post('http://localhost:3000');
-        } catch (error) {
-            console.log(error)
-        }
+    it("GET " + endpointUrl, async () => {
+        const response = await request(app)
+            .get(endpointUrl);
+        expect(response.statusCode).toBe(200);
+        expect(Array.isArray(response.body)).toBeTruthy();
+        expect(response.body[0].title).toBeDefined();
+        expect(response.body[0].done).toBeDefined();
+    });
 
-        //     .post(endpointUrl)
-        //     .send(newTodo);
-       //     console.log (response);
-        //     expect(response.statusCode).toBe(201);
-        //     expect(response.body.title).toBe(newTodo.title);
-        //     expect(response.body.done).toBe(newTodo.done);
+
+    it("POST " + endpointUrl, async () => {
+        const response = await request(app)
+            .post(endpointUrl)
+            .send(newTodo);
+        expect(response.statusCode).toBe(201);
+        expect(response.body.title).toBe(newTodo.title);
+        expect(response.body.done).toBe(newTodo.done);
+    });
+    it("Should return error 501 on malformed data with POST " + endpointUrl, async () => {
+        const response = await request(app)
+            .post(endpointUrl)
+            .send({title:"missing done property"});
+        expect(response.statusCode).toBe(500);
+        expect(response.body).toStrictEqual({message: "Todo validation failed: done: Path `done` is required."});
     });
 });
