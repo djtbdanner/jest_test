@@ -1,0 +1,10 @@
+*/terraform.tfvars
+*/terraform.tfstate
+*/terraform.tfstate.backup
+*/.terraform
+*/mykey*
+*.csv
+myKey*
+*.bak
+*.info
+/node_modules

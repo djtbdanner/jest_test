@@ -1,0 +1,21 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jest": "^26.6.3",
+    "mongoose": "^5.11.8"
+  },
+  "devDependencies": {
+    "node-mocks-http": "^1.9.0",
+    "supertest": "^6.0.1"
+  }
+}
